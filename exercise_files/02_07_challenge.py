@@ -57,20 +57,33 @@ class TerminalScribe:
         self.canvas.print()
         time.sleep(self.framerate)
 
+    def drawSquare(self, size):
+        for i in range(size):
+            self.right();
+        for i in range(size):
+            self.down();
+        for i in range(size):
+            self.left()
+        for i in range(size):
+            self.up();
+
+
 canvas = Canvas(30, 30)
 scribe = TerminalScribe(canvas)
 
-scribe.right()
-scribe.right()
-scribe.right()
-scribe.down()
-scribe.down()
-scribe.down()
-scribe.left()
-scribe.left()
-scribe.left()
-scribe.up()
-scribe.up()
-scribe.up()
 
+#scribe.right()
+#scribe.right()
+#scribe.right()
+#scribe.down()
+#scribe.down()
+#scribe.down()
+#scribe.left()
+#scribe.left()
+#scribe.left()
+#scribe.up()
+#scribe.up()
+#scribe.up()
+
+scribe.drawSquare(4)
 
