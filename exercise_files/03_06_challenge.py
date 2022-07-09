@@ -1,6 +1,7 @@
 import os
 import time
 from termcolor import colored
+import math
 
 class Canvas:
     def __init__(self, width, height):
@@ -12,7 +13,7 @@ class Canvas:
         return point[0] < 0 or point[0] >= self._x or point[1] < 0 or point[1] >= self._y
 
     def setPos(self, pos, mark):
-        self._canvas[pos[0]][pos[1]] = mark
+        self._canvas[round(pos[0])][round(pos[1])] = mark
 
     def clear(self):
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -50,6 +51,13 @@ class TerminalScribe:
         if not self.canvas.hitsWall(pos):
             self.draw(pos)
 
+    def drawWithDirection(self, degrees):
+        radians = (degrees/180) * math.pi
+        direction = [math.sin(radians), - math.cos(radians)]
+        pos = [self.pos[0] + direction[0], self.pos[1] + direction[1]]
+        if not self.canvas.hitsWall(pos):
+            self.draw(pos)
+
     def drawSquare(self, size):
         i = 0
         while i < size:
@@ -68,8 +76,6 @@ class TerminalScribe:
             self.up()
             i = i + 1
 
-
-
     def draw(self, pos):
         self.canvas.setPos(self.pos, self.trail)
         self.pos = pos
@@ -80,5 +86,8 @@ class TerminalScribe:
 canvas = Canvas(30, 30)
 scribe = TerminalScribe(canvas)
 
-scribe.drawSquare(20)
+for i in range(20):
+    scribe.drawWithDirection(135)
 
+scribe.draw([0,0])
+scribe.drawSquare(5)
