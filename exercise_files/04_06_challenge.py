@@ -2,7 +2,7 @@ import os
 import time
 from termcolor import colored
 import math 
-
+from enum import Enum
 
 class Canvas:
     def __init__(self, width, height):
@@ -76,9 +76,50 @@ class TerminalScribe:
         self.canvas.print()
         time.sleep(self.framerate)
 
+class Direction(Enum):
+    LEFT = 1,
+    RIGHT = 2,
+    UP = 3,
+    DOWN = 4
+
+class Action(Enum):
+    SET_DEGREES = 0,
+    GO_LEFT = 1,
+    GO_RIGHT = 2,
+    GO_UP = 3,
+    GO_DOWN = 4
+
+class Program:
+
+    def __init__(self):
+        self.actions = []
+
+    def go(self, degrees, count):
+        self.actions.append([degrees, count])
+
+    def execute(self, scribe):
+        for current in self.actions:
+            scribe.setDegrees(current[0])
+            for i in range(current[1]):
+                scribe.forward()
+
+
 canvas = Canvas(30, 30)
 scribe = TerminalScribe(canvas)
-scribe.setDegrees(135)
-for i in range(30):
-    scribe.forward()
+#scribe.setDegrees(135)
+#for i in range(30):
+#    scribe.forward()
 
+p1 = Program()
+p1.go(135, 30)
+p1.execute(scribe)
+
+scribe.draw((0, 0))
+
+p2 = Program()
+p2.go(90, 5)
+p2.go(180, 5)
+p2.go(270, 5)
+p2.go(0, 5)
+
+p2.execute(scribe)
