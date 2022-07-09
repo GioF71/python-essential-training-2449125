@@ -32,26 +32,18 @@ class TerminalScribe:
         self.pos = [0, 0]
 
     def up(self):
-        pos = [self.pos[0], self.pos[1]-1]
-        if not self.canvas.hitsWall(pos):
-            self.draw(pos)
+        self.plot(0)
 
     def down(self):
-        pos = [self.pos[0], self.pos[1]+1]
-        if not self.canvas.hitsWall(pos):
-            self.draw(pos)
+        self.plot(180)
 
     def right(self):
-        pos = [self.pos[0]+1, self.pos[1]]
-        if not self.canvas.hitsWall(pos):
-            self.draw(pos)
+        self.plot(90)
 
     def left(self):
-        pos = [self.pos[0]-1, self.pos[1]]
-        if not self.canvas.hitsWall(pos):
-            self.draw(pos)
+        self.plot(270)
 
-    def drawWithDirection(self, degrees):
+    def plot(self, degrees):
         radians = (degrees/180) * math.pi
         direction = [math.sin(radians), - math.cos(radians)]
         pos = [self.pos[0] + direction[0], self.pos[1] + direction[1]]
@@ -87,7 +79,7 @@ canvas = Canvas(30, 30)
 scribe = TerminalScribe(canvas)
 
 for i in range(20):
-    scribe.drawWithDirection(135)
+    scribe.plot(135)
 
 scribe.draw([0,0])
 scribe.drawSquare(5)
